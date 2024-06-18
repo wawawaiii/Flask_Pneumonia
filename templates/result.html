@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Result</title>
+</head>
+<body>
+<h1>Analysis Result</h1>
+<p>Classification: {{ classification }}</p>
+<p>Confidence: {{ confidence }}</p>
+<img src="{{ url_for('static', filename='result.jpg') }}" alt="Segmentation Result">
+</body>
+</html>

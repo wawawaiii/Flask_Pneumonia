@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+<body>
+    <form id="uploadForm">
+        <input type="file" id="pneumoniaImageInput" name="file">
+        <button type="button" onclick="simpleTest()">Upload</button>
+    </form>
+    <script>
+        function simpleTest() {
+            const formData = new FormData(document.getElementById('uploadForm'));
+            fetch('http://192.168.0.13:8000/judgePN-fromimg-with-vgg16/', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

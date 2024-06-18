@@ -1,0 +1,220 @@
+body {
+    background-color: #f0f2f5;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 70px;
+}
+
+.container {
+    max-width: 1200px;
+    margin-top: 50px;
+}
+
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.sidebar {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    width: 250px;
+    height: calc(100% - 100px);
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar ul li a i {
+    margin-right: 10px;
+}
+
+.content {
+    margin-left: 290px;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.custom-file-label::after {
+    content: '찾기';
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.btn {
+    border-radius: 10px;
+}
+
+#uploadedImageDisplay img {
+    width: 100%;  /* 이미지 크기 원래대로 */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#resultsDisplay img {
+    width: 50%;  /* 세그멘테이션 결과 이미지 크기를 반으로 줄임 */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#docList {
+    margin-top: 20px;
+    padding-left: 0;
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#docList li {
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+#docList li:hover {
+    background-color: #f0f2f5;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#resultsDisplay {
+    display: none;
+    margin-top: 20px; /* 결과 창에 약간의 여백 추가 */
+}
+
+.result-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.result-details {
+    margin-left: 0;
+    flex: 1;
+}
+
+.result-card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.result-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.result-card p {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.footer {
+    margin-top: 50px;
+    text-align: center;
+    color: #777;
+}
+
+/* 이미지 크기 조정 */
+#imageContainer {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#resultContainer {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#imageContainer img, #originalImageContainer img {
+    width: 50%;  /* 세그멘테이션 결과 이미지 크기를 반으로 줄임 */
+    max-height: 400px;  /* 세그멘테이션 결과 이미지 크기를 반으로 줄임 */
+    object-fit: contain;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+
+    .result-section {
+        flex-direction: column;
+    }
+
+    #imageContainer {
+        width: 100%;
+    }
+
+    #resultContainer {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .result-card {
+        width: 100%;
+    }
+}

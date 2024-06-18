@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Diagnostic AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+            overflow-x: hidden;
+        }
+        .hero {
+            background: url('/static/main.jpg') no-repeat center center;
+            background-size: cover;
+            height: 90vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        .hero.visible {
+            opacity: 1;
+        }
+        .overlay {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .section img {
+            width: 33%;
+            margin-right: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .section .text {
+            flex: 1;
+        }
+        .section h2 {
+            margin-bottom: 20px;
+            font-weight: 300;
+            color: #2c3e50;
+        }
+        .section p {
+            font-size: 1.1em;
+            line-height: 1.6em;
+            color: #555;
+        }
+        .feature-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .feature-box .feature-item {
+            background: white;
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: calc(33% - 20px);
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateX(-20px) scale(0.9);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .feature-box .feature-item.visible {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+        .feature-box .feature-item h3 {
+            margin-bottom: 15px;
+            font-weight: 400;
+            color: #2980b9;
+        }
+        .feature-box .feature-item p {
+            color: #555;
+        }
+        .login-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyD2rtOS7GcYURKouuO1DmPkGYaN3BiERL8",
+          authDomain: "brain-tumor-2ea99.firebaseapp.com",
+          databaseURL: "https://brain-tumor-2ea99-default-rtdb.firebaseio.com",
+          projectId: "brain-tumor-2ea99",
+          storageBucket: "brain-tumor-2ea99.appspot.com",
+          messagingSenderId: "393430095565",
+          appId: "1:393430095565:web:67482c41fec8524a7bbb84",
+          measurementId: "G-1EXK7R1VSG"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                updateLoginStatus();
+            }).catch((error) => {
+                console.error("로그아웃 실패: ", error.message);
+            });
+        }
+
+        function updateLoginStatus() {
+            const user = firebase.auth().currentUser;
+            const loginButton = document.getElementById('loginButton');
+            const logoutButton = document.getElementById('logoutButton');
+            if (user) {
+                loginButton.style.display = 'none';
+                logoutButton.style.display = 'block';
+            } else {
+                loginButton.style.display = 'block';
+                logoutButton.style.display = 'none';
+            }
+        }
+
+        firebase.auth().onAuthStateChanged(updateLoginStatus);
+    </script>
+</head>
+<body>
+
+<header class="hero">
+    <a href="/login" class="btn btn-primary login-btn" id="loginButton">Login</a>
+    <a href="#" class="btn btn-primary login-btn" id="logoutButton" style="display:none;" onclick="logout()">Logout</a>
+    <div class="overlay">
+        <h1>Welcome to Medical Diagnostic AI</h1>
+        <p>Leading innovation in medical diagnostics with AI technology.</p>
+        <button class="btn btn-primary" onclick="handleAnalyzeClick()">분석 하기</button>
+    </div>
+</header>
+
+<section class="section">
+    <img src="\static\PNEUMONIA.png" alt="AI Diagnosis">
+    <div class="text">
+        <h2>폐렴이란</h2>
+        <p>폐렴은 폐에 염증이 생기는 질환으로, 주로 세균, 바이러스, 또는 곰팡이에 의해 발생합니다. 이 질병은 폐포에 액체가 차고 염증이 생기면서 정상적인 호흡을 방해합니다.
+        폐렴의 초기 증상으로는 기침, 발열, 가슴 통증, 호흡 곤란 등이 있으며, 이는 다른 호흡기 질환과 유사해 초기 진단이 어려울 수 있습니다.
+        진단이 늦어질 경우, 폐렴은 중증으로 발전하여 생명을 위협할 수 있습니다. 따라서 조기 진단과 적절한 치료가 매우 중요합니다.
+        전통적인 폐렴 진단 방법은 흉부 X-ray나 CT 스캔을 통해 이루어지며, 이는 많은 시간과 비용이 소요될 수 있습니다.
+        이러한 한계를 극복하기 위해, 우리는 딥러닝 기술을 활용한 폐렴 진단 모델을 개발하고자 합니다.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="feature-box">
+        <div class="feature-item" id="resnet">
+            <h3>ResNet Model</h3>
+            <p>ResNet(Residual Network)은 딥러닝 모델에서 깊은 신경망의 훈련이 어려운 문제를 해결하기 위해 제안된 구조입니다. ResNet은 잔차 연결을 도입하여 정보의 흐름을 원활하게 하고, 매우 깊은 네트워크에서도 효과적으로 학습할 수 있게 합니다. 이 모델은 이미지 분류, 물체 인식 등 다양한 컴퓨터 비전 과제에서 뛰어난 성능을 보입니다.</p>
+        </div>
+        <div class="feature-item" id="vgg">
+            <h3>VGG Model</h3>
+            <p>VGG(Very Deep Convolutional Networks)는 매우 깊은 신경망 구조를 가진 모델로, 심층 신경망의 성능을 극대화하기 위해 제안되었습니다. VGG 모델은 작은 크기의 필터를 사용하여 깊은 네트워크를 형성하며, 이는 이미지 분류에서 매우 높은 정확도를 제공합니다. 그러나 많은 계산 자원이 필요하다는 단점이 있습니다.</p>
+        </div>
+        <div class="feature-item" id="alexnet">
+            <h3>AlexNet Model</h3>
+            <p>AlexNet은 2012년 ImageNet 대회에서 우승한 모델로, 처음으로 대규모의 깊은 신경망이 컴퓨터 비전 과제에서 성공적으로 적용된 사례입니다. AlexNet은 ReLU 활성화 함수와 드롭아웃 기법을 도입하여 학습 속도를 높이고 과적합을 방지하였습니다. 이 모델은 딥러닝의 대중화에 큰 기여를 하였습니다.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section about">
+
+    <img src="\static\digital.png" alt="AI Diagnosis">
+    <p>
+        Medical Diagnostic AI는 인공지능의 힘을 통해 의료 진단 분야를 혁신하는 데 전념하고 있습니다. 우리의 사명은 정확한 질병 진단을 지원하여 조기 발견과 효과적인 치료를 보장하는 최첨단 AI 모델을 개발하는 것입니다.
+        우리 팀은 AI, 머신러닝 및 의학 분야의 전문가들로 구성되어 있으며, 현대 의료의 도전에 대응하는 혁신적인 솔루션을 공동으로 개발하고 있습니다. 고급 기술을 활용하여 진단 정확도를 향상시키고 비용을 절감하며 궁극적으로 환자 결과를 개선하는 것을 목표로 합니다.
+        우리는 AI 기반 진단이 의료 실무의 표준이 되어 신뢰할 수 있고 신속한 통찰력을 제공하여 임상 의사 결정을 지원하는 미래를 믿습니다. 우리의 비전은 이 변화를 선도하고 모든 사람에게 고품질의 의료 서비스를 제공하는 것입니다.
+    </p>
+</section>
+
+<section class="section contact">
+    <h2>Contact Us</h2>
+    <p>Email: xxx@gmail.com | Phone: 123-456-7890</p>
+</section>
+
+<footer>
+    <p>&copy; 2024 Medical Diagnostic AI. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function handleAnalyzeClick() {
+    const user = firebase.auth().currentUser;
+    if (user) {
+        window.location.href = '/index';
+    } else {
+        window.location.href = '/login';
+    }
+}
+
+document.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.hero, .section, .feature-item');
+    const scrollPos = window.scrollY + window.innerHeight;
+
+    sections.forEach((section, index) => {
+        if (section.offsetTop < scrollPos - 100) {
+            section.classList.add('visible');
+        }
+    });
+
+    const resnet = document.getElementById('resnet');
+    const vgg = document.getElementById('vgg');
+    const alexnet = document.getElementById('alexnet');
+
+    if (resnet.offsetTop < scrollPos - 100) {
+        resnet.classList.add('visible');
+        setTimeout(() => vgg.classList.add('visible'), 300);
+        setTimeout(() => alexnet.classList.add('visible'), 600);
+    }
+});
+
+window.onload = () => {
+    document.querySelector('.hero').classList.add('visible');
+};
+</script>
+</body>
+</html>
